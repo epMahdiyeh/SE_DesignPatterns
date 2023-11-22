@@ -17,15 +17,10 @@ public class PackageContext {
         packageState.printStatus();
     }
 
-    public void deliverPackage() {
-        System.out.println("Package has been delivered.");
-    }
-
 
     public void updateState() {
         boolean isDelivered = packageState.updateState(this);
         if (isDelivered) {
-            deliverPackage();
         }
     }
 

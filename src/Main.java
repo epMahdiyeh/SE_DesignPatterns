@@ -1,5 +1,4 @@
 package src;
-
 import java.util.Scanner;
 
 public class Main {
@@ -12,7 +11,7 @@ public class Main {
         ShippingStrategy defaultShipping = new StandardShipping();
         ShippingContext shippingContext = new ShippingContext(defaultShipping);
 
-        System.out.print("Is the package delivered? true or false? : ");
+        System.out.print("Is the package delivered? true or false? ");
         boolean isDelivered = scanner.nextBoolean();
 
         System.out.print("Enter transit duration: ");
@@ -20,9 +19,10 @@ public class Main {
 
         PackageContext packageContext = new PackageContext(packageWeight, isDelivered, transitDuration);
 
-        while (!packageContext.isDelivered()) {
+        do {
             System.out.print("Choose shipping method: 1. Standard, 2. Express: ");
             int shippingMethod = scanner.nextInt();
+
             if (shippingMethod == 1) {
                 shippingContext.setShippingStrategy(new StandardShipping());
             } else if (shippingMethod == 2) {
@@ -31,13 +31,14 @@ public class Main {
                 System.out.println("Invalid input");
                 continue;
             }
+
             double shippingPrice = shippingContext.calculateShippingPrice(packageWeight);
-            System.out.println("Shipping price is : " + shippingPrice + "Tooman");
+            System.out.println("Shipping price is: " + shippingPrice + " Tooman");
 
             packageContext.updateState();
             packageContext.printStatus();
-        }
 
-        System.out.println("Package has been delivered");
+        } while (!packageContext.isDelivered());
+
     }
 }

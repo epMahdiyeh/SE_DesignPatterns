@@ -14,18 +14,11 @@ public class IntransitState implements PackageState {
 
     @Override
     public boolean updateState(PackageContext packageContext) {
-        if (--transitDuration <= 0) {
+        transitDuration--;
+        if (transitDuration == 0) {
             packageContext.setPackageState(new DeliveredState());
             return true;
-        } else {
-            return false;
         }
-    }
-    public void changeToDelivered(PackageContext packageContext) {
-        packageContext.setPackageState(new DeliveredState());
-    }
-
-    public void setTransitDuration(int transitDuration) {
-        this.transitDuration = transitDuration;
+        return false;
     }
 }
