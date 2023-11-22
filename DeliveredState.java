@@ -4,6 +4,7 @@ class DeliveredState implements PackageState {
         System.out.println("Package is delivered successfully");
     }
     @Override
-    public void updateState(PackageContext packageContext) {
+    public boolean updateState(PackageContext packageContext) {
+        return false;
     }
 }

@@ -1,25 +1,41 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        double packageWeight = 1.4;
+        Scanner scanner = new Scanner(System.in);
 
-        ShippingStrategy standardShipping = new StandardShipping();
-        ShippingStrategy expressShipping = new ExpressShipping();
+        System.out.print("Enter the weight of the package: ");
+        double packageWeight = scanner.nextDouble();
 
-        PackageContext packageContext = new PackageContext();
+        ShippingStrategy defaultShipping = new StandardShipping();
+        ShippingContext shippingContext = new ShippingContext(defaultShipping);
 
-        ShippingContext shippingContext = new ShippingContext(standardShipping);
-        double standardShippingPrice = shippingContext.calculateShippingPrice(packageWeight);
-        System.out.println("Standard Shipping Price is : " + standardShippingPrice + " Tooman");
+        System.out.print("Is the package delivered? true or false? : ");
+        boolean isDelivered = scanner.nextBoolean();
 
-        shippingContext.setShippingStrategy(expressShipping);
-        double expressShippingPrice = shippingContext.calculateShippingPrice(packageWeight);
-        System.out.println("Express Shipping Price is : " + expressShippingPrice + " Tooman");
+        System.out.print("Enter transit duration: ");
+        int transitDuration = scanner.nextInt();
 
-        packageContext.updateState();
-        packageContext.printStatus();
+        PackageContext packageContext = new PackageContext(packageWeight, isDelivered, transitDuration);
 
-        packageContext.setPackageState(new DeliveredState());
-        packageContext.updateState();
-        packageContext.printStatus();
+        while (!packageContext.isDelivered()) {
+            System.out.print("Choose shipping method: 1. Standard, 2. Express: ");
+            int shippingMethod = scanner.nextInt();
+            if (shippingMethod == 1) {
+                shippingContext.setShippingStrategy(new StandardShipping());
+            } else if (shippingMethod == 2) {
+                shippingContext.setShippingStrategy(new ExpressShipping());
+            } else {
+                System.out.println("Invalid input");
+                continue;
+            }
+            double shippingPrice = shippingContext.calculateShippingPrice(packageWeight);
+            System.out.println("Shipping price is : " + shippingPrice + "Tooman");
+
+            packageContext.updateState();
+            packageContext.printStatus();
+        }
+
+        System.out.println("Package has been delivered");
     }
 }

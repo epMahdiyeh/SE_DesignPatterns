@@ -1,8 +1,10 @@
-class PackageContext {
+public class PackageContext {
     private PackageState packageState;
+    private boolean isDelivered;
 
-    public PackageContext() {
-        this.packageState = new IntransitState();
+    public PackageContext(double packageWeight, boolean isDelivered, int transitDuration) {
+        this.isDelivered = isDelivered;
+        this.packageState = new IntransitState(transitDuration);
     }
 
     public void setPackageState(PackageState packageState) {
@@ -13,7 +15,19 @@ class PackageContext {
         packageState.printStatus();
     }
 
+    public void deliverPackage() {
+        System.out.println("Package has been delivered.");
+    }
+
+
     public void updateState() {
-        packageState.updateState(this);
+        boolean isDelivered = packageState.updateState(this);
+        if (isDelivered) {
+            deliverPackage();
+        }
+    }
+
+    public boolean isDelivered() {
+        return isDelivered;
     }
 }

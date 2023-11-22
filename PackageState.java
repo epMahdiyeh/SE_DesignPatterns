@@ -1,4 +1,4 @@
 interface PackageState {
     void printStatus();
-    void updateState(PackageContext packageContext);
+    boolean updateState(PackageContext packageContext);
 }
