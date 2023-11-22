@@ -1,3 +1,5 @@
+package src;
+
 public class ExpressShipping implements ShippingStrategy {
     @Override
     public double calculatePrice(double weight) {

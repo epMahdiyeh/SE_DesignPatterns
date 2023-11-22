@@ -1,3 +1,5 @@
+package src;
+
 public class IntransitState implements PackageState {
     private int transitDuration;
 

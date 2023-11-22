@@ -1,3 +1,5 @@
+package src;
+
 class ShippingContext {
     private ShippingStrategy shippingStrategy;
     public ShippingContext(ShippingStrategy shippingStrategy) {

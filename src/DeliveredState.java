@@ -1,3 +1,5 @@
+package src;
+
 class DeliveredState implements PackageState {
     @Override
     public void printStatus() {
